@@ -1,0 +1,81 @@
+<% layout("/layouts/boilerplate") %>
+
+<body class="bg-light py-4 px-3">
+  <div class="container">
+    <h2 class="mb-4 text-left text-primary fw-semibold">All Listed Guesthouses</h2>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+      <% for (let listing of allListing) { %>
+        <div class="col">
+          <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
+            <div class="card h-100 shadow-sm border-0 rounded-4 transition">
+              <img
+                src="<%= listing.image?.url || 'https://via.placeholder.com/400x300?text=No+Image' %>"
+                class="card-img-top rounded-top-4"
+                alt="listing image"
+                style="height: 220px; object-fit: cover;"
+              />
+              <div class="card-body">
+                <h5 class="card-title mb-2 fw-bold"><%= listing.title %></h5>
+
+               <p class="card-text text-muted mb-1">
+  <% if (listing.price != null) { %>
+    ₹<%= listing.price.toLocaleString("en-IN") %> <small>/ night</small>
+  <% } else { %>
+    <span class="text-muted">Price not available</span>
+  <% } %>
+</p>
+
+
+              </div>
+            </div>
+          </a>
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- ✅ Scroll Animation Script -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        } else {
+          entry.target.classList.remove("show");
+        }
+      });
+    }, {
+      threshold: 0.1,
+    });
+
+    const cards = document.querySelectorAll(".card");
+    cards.forEach((card, index) => {
+      card.style.transitionDelay = `${index * 0.05}s`;
+      observer.observe(card);
+    });
+  </script>
+
+  <!-- ✅ CSS for scroll effect -->
+  <style>
+    .card {
+      opacity: 0;
+      transform: scale(0.95);
+      transition: all 0.6s ease;
+    }
+
+    .card.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .hover-shadow:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .transition {
+      transition: 0.3s ease-in-out;
+    }
+  </style>
+</body>

@@ -1,0 +1,48 @@
+<% layout("/layouts/boilerplate") %>
+
+<body class="py-5">
+  <div class="container">
+    <div class="card border-0 shadow-lg p-4 bg-white rounded-5">
+      <h2 class="text-center fw-bold mb-4">✏️ Edit Guesthouse</h2>
+
+      <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="form-grey" novalidate>
+
+        <div class="mb-3">
+          <label class="form-label">Title</label>
+          <input name="listing[title]" type="text" class="form-control" value="<%= listing.title %>" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <textarea name="listing[description]" class="form-control" rows="3" required><%= listing.description %></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Image URL</label>
+          <input name="listing[image][url]" type="text" class="form-control" value="<%= listing.image?.url %>" required>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Price</label>
+            <input name="listing[price]" type="number" class="form-control" value="<%= listing.price %>" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Country</label>
+            <input name="listing[country]" type="text" class="form-control" value="<%= listing.country %>" required>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Location</label>
+          <input name="listing[location]" type="text" class="form-control" value="<%= listing.location %>" required>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-success rounded-pill">💾 Save Changes</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</body>

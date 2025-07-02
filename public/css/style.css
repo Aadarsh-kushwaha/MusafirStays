@@ -1,0 +1,183 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  width: 100%;
+  overflow-x: hidden;
+  background-color: #f8f9fa;
+}
+
+/* Navbar */
+.navbar {
+  height: 5rem;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.fa-house-flag {
+  color: brown;
+  font-size: 2rem;
+}
+
+.nav-link {
+  color: black !important;
+}
+
+/* Footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: #f5f5f5;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.f-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.f-info-socials {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.f-info-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.f-info-links a {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+}
+
+.f-info-links a:hover {
+  text-decoration: underline;
+  color: #333;
+}
+
+/* Card Styling */
+.card {
+  border: none !important;
+  margin-bottom: 2rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 1rem !important;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+  border-radius: 1rem 1rem 0 0 !important;
+  width: 100% !important;
+  height: 220px;
+  object-fit: cover !important;
+}
+
+.card-body {
+  padding: 0.75rem !important;
+}
+
+.card-title {
+  font-size: 1.1rem;
+}
+
+.card-text {
+  font-weight: 400 !important;
+  color: #555;
+}
+
+.listing-link {
+  text-decoration: none !important;
+}
+
+/* Image Overlay Effect */
+.card-img-overlay {
+  opacity: 0;
+  transition: 0.3s ease;
+  border-radius: 1rem;
+}
+
+.card:hover .card-img-overlay {
+  opacity: 0.15;
+  background: white;
+}
+
+/* Primary Button Custom */
+.btn-primary {
+  background-color: rgb(144, 68, 68) !important;
+  border: none;
+}
+
+/* Responsive Footer on small screens */
+@media (max-width: 576px) {
+  .f-info {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+.card {
+  transition: all 0.05s ease-out;
+  transition-delay: 0.1s;
+}
+
+/* --- Soft Grey Theme --- */
+
+body {
+  background-color: #f1f3f5;
+  color: #212529;
+}
+
+.form-grey {
+  background: #e9ecef;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.form-grey input,
+.form-grey textarea {
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 0.5rem;
+  color: #212529;
+}
+
+.form-grey input:focus,
+.form-grey textarea:focus {
+  border-color: #5e60ce;
+  box-shadow: 0 0 0 0.2rem rgba(94, 96, 206, 0.2);
+}
+
+.form-grey label {
+  font-weight: 600;
+  color: #343a40;
+}
+
+.form-grey .btn-primary {
+  background-color: #5e60ce;
+  border: none;
+  font-weight: 600;
+  color: white;
+}
+
+.form-grey .btn-primary:hover {
+  background-color: #4c4fc6;
+}

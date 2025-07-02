@@ -1,0 +1,36 @@
+<% layout("/layouts/boilerplate") %>
+
+<body class="bg-light">
+  <div class="container mt-2 mb-5">
+    <div class="card shadow-sm rounded-4">
+      <div class="card-body">
+        <h2 class="mb-1 text-start">Your beloved:<%=  listing.title %></h2>
+        <br />
+
+        <% if (listing.image) { %>
+          <div class="d-flex justify-content-center mb-1" style="height: 300px;width:1700px">
+            <img src="<%= listing.image.url %>" alt="Listing Image" 
+                 class="listing-image rounded border" 
+                 style="width: 30%; max-width: 400px;">
+          </div>
+        <% } %> 
+        <br />
+
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><%= listing.description %></li>
+          <li class="list-group-item">₹<%= listing.price.toLocaleString('en-IN') %></li>
+          <li class="list-group-item"><%= listing.location %>, <%= listing.country %></li>
+        </ul>
+        <br />
+
+        <div class="d-flex justify-content-between">
+          <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary px-4 rounded-2">Edit</a>
+          <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+            <button type="submit" class="btn btn-dark px-4 rounded-3">Delete</button>
+          </form>
+        </div>
+        <br />
+      </div>
+    </div>
+  </div>
+</body>

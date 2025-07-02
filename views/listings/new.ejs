@@ -1,0 +1,61 @@
+<% layout("/layouts/boilerplate") %>
+
+<body class="bg-light">
+  <div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-5 p-4">
+      <div class="card-body">
+        <h2 class="mb-4 text-center text-primary fw-bold">🚀 Create a New Guesthouse Listing</h2>
+
+        <form method="POST" action="/listings" novalidate class="needs-validation">
+
+          <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input name="listing[title]" type="text" class="form-control rounded-3" placeholder="Name of your listing" required>
+            <div class="valid-feedback">Title is complete</div>
+             <div class="invalid-feedback">Title is not valid</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea name="listing[description]" rows="3" class="form-control rounded-3" placeholder="Describe your place..." required></textarea>
+             <div class="valid-feedback">Description is complete</div>
+            <div class="invalid-feedback">Give the description for more info </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Image URL</label>
+            <input name="listing[image][url]" type="text" class="form-control rounded-3" placeholder="https://yourimage.jpg" >
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Price (₹)</label>
+              <input name="listing[price]" type="number" class="form-control rounded-3" placeholder="Eg: 1200" required>
+               <div class="valid-feedback">Pricing is done</div>
+              <div class="invalid-feedback">Price is not valid</div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Country</label>
+              <input name="listing[country]" type="text" class="form-control rounded-3" placeholder="Eg: India" required>
+               <div class="valid-feedback">Country is complete</div>
+              <div class="invalid-feedback">Country is not valid</div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Location</label>
+            <input name="listing[location]" type="text" class="form-control rounded-3" placeholder="Eg: Manali, Himachal Pradesh" required>
+             <div class="valid-feedback">Location is complete</div> 
+            <div class="invalid-feedback">Enter valid Location</div>
+          </div>
+
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-primary rounded-pill fw-bold py-2">➕ Add Listing</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
