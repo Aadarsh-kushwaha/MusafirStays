@@ -99,18 +99,6 @@ app.delete("/listings/:id",wrapAsync(async (req,res)=>{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 //When The request does't matches with of the routes
 // app.all("*", (req, res, next) => {
 //     next(new ExpressError(404, "Page not found"));
