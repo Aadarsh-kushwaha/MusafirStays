@@ -6,7 +6,7 @@ Built with Node.js, Express, and MongoDB — simple, clean and scalable!
 
 ---
 
-## 🚀 Features
+## 🚀Key Features
 
 - ✅ Create New Rental Listings
 - ✅ Edit Existing Listings
