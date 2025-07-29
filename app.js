@@ -9,7 +9,9 @@ const ejsMate = require("ejs-mate");
 const port=8080;
 const wrapAsync=require("./utils/wrapAsync.js");
 const ExpressError=require("./utils/ExpressError");
-const {listingSchema}= require("./schema.js")
+const {listingSchema , reviewSchema}= require("./schema.js")
+const Review = require("./models/review.js");
+
 // Connect to MongoDB
 async function main() {
     await mongoose.connect(MONGO_URL);
@@ -29,11 +31,10 @@ app.use(methodOverride("_method"));
 app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
-
 app.get("/",(req,res)=>{
     res.send("It's features are not added yet ....");
 });
-
+// Route to server side validation for  the listing form 
 const validateListing= (req,res,next)=>{
   const {error} = listingSchema.validate(req.body);
      if (error) {
@@ -44,6 +45,18 @@ const validateListing= (req,res,next)=>{
         next();
     } 
 }
+
+const validateReview= (req,res,next)=>{
+  const {error} = reviewSchema.validate(req.body);
+     if (error) {
+    const msg = error.details.map(el => el.message).join(', ');
+    throw new ExpressError(400, msg);
+  } 
+    else{
+        next();
+    } 
+}
+
 //SHOW LISTINGS
 app.get("/listings",wrapAsync(async (req,res)=>{
  const allListing =   await  Listing.find({});
@@ -97,12 +110,35 @@ app.delete("/listings/:id",wrapAsync(async (req,res)=>{
   res.redirect("/listings");
 }));
 
+app.get("/listings/:id/review-success", (req, res) => {
+  res.render("reviewSuccess", { id: req.params.id });
+});
+
+
+// // Post route for creating reviews wrt listing's id's reviews
+app.post("/listings/:id/reviews",validateReview,wrapAsync(async(req,res)=>{
+let listing = await Listing.findById(req.params.id);
+let newReview = new Review(req.body.review);
+listing.reviews.push(newReview);
+
+await newReview.save();
+await listing.save();
+
+res.redirect(`/listings/${listing._id}`);
+
+
+}
+)
+);
+
 
 
 //When The request does't matches with of the routes
 // app.all("*", (req, res, next) => {
 //     next(new ExpressError(404, "Page not found"));
 // });
+
+
 
 
 // Middlewre for error handling

@@ -4,7 +4,7 @@
   <div class="container mt-2 mb-5">
     <div class="card shadow-sm rounded-4">
       <div class="card-body">
-        <h2 class="mb-1 text-start">Just for:<%=  listing.title %></h2>
+        <h2 class="mb-1 text-start">Your Beloved:<%=  listing.title %></h2>
         <br />
 
         <% if (listing.image) { %>
@@ -29,16 +29,31 @@
             <button type="submit" class="btn btn-dark px-4 rounded-3">Delete</button>
           </form>
         </div>
-        <div class="col-8 offset-3">
+        <div class="col-8 offset-1 mb-3">
+          <hr>
           <h4>Leave a Review</h4>
-          <form>
-            <div>
-              <label for="rating">Rating</label>
-              <input type="range" min="1" max="5" id="rating" name="review[rating]">
+          <form action="/listings/<%=listing.id %>/reviews" 
+            method="post"
+            novalidate
+            class="needs-validation"
+            >
+            <div class="mb-3 mt-3">
+              <label for="rating" class="form-label">Rating</label>
+          
+             <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range" required>
+<div class="invalid-feedback">
+  Please select a rating between 1 and 5.
+</div>
+
+
             </div>
-            <div>
-              <label for="comments">Comments</label>
+            <div class="mb-3 mt-3">
+              <label for="comments" class="form-label">Comments</label>
+              <textarea name="review[comment]" id="comment" cols="40" rows="5" class="form-control" required></textarea>
+              <div class="invalid-feedback">Please submitt some comments </div>
             </div>
+            <br>
+            <button class="btn btn-outline-dark">Submitt</button>
           </form>
         </div>
         <br />
