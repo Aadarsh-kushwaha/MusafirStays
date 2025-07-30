@@ -85,7 +85,7 @@ app.post("/listings", validateListing, wrapAsync(async (req, res) => {
 //SHOW ROUTE
 app.get("/listings/:id",wrapAsync(async (req,res)=>{
     let {id} = req.params;
-    const listing =  await Listing.findById(id);
+    const listing =  await Listing.findById(id).populate("reviews");
 res.render("listings/show.ejs",{listing});
 }));
 
@@ -109,10 +109,6 @@ app.delete("/listings/:id",wrapAsync(async (req,res)=>{
   let deleted = await  Listing.findByIdAndDelete(id);
   res.redirect("/listings");
 }));
-
-app.get("/listings/:id/review-success", (req, res) => {
-  res.render("reviewSuccess", { id: req.params.id });
-});
 
 
 // // Post route for creating reviews wrt listing's id's reviews
