@@ -8,7 +8,7 @@
       <% for (let listing of allListing) { %>
         <div class="col">
           <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
-            <div class="card h-100 shadow-sm border-0 rounded-4 transition">
+            <div class="card h-100 shadow-sm border-0 rounded-4 transition listing-card">
               <img
                 src="<%= listing.image?.url || 'https://via.placeholder.com/400x300?text=No+Image' %>"
                 class="card-img-top rounded-top-4"

@@ -8,7 +8,7 @@
         <br />
 
         <% if (listing.image) { %>
-          <div class="d-flex justify-content-center mb-1" style="height: 300px;width:1700px">
+          <div class="d-flex justify-content-center mb-1 listings-card" style="height: 300px;width:1700px">
             <img src="<%= listing.image.url %>" alt="Listing Image" 
                  class="listing-image rounded border" 
                  style="width: 30%; max-width: 400px;">
@@ -40,7 +40,7 @@
             <div class="mb-3 mt-3">
               <label for="rating" class="form-label">Rating</label>
           
-             <input type="range" min="0" max="5" id="rating" name="review[rating]" class="form-range" value="3" required>
+             <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range" value="3" required>
 <div class="invalid-feedback">
   Please select a rating between 1 and 5.
 </div>
@@ -55,17 +55,30 @@
             <br>
             <button class="btn btn-outline-dark">Submitt</button>
           </form>
-          <hr>
-         <p><b>All Reviews</b></p> <h4></h4>
-          <ul>
+      <hr>
+       <p class="fs-5 fw-semibold text-dark mb-3">All Reviews</p>
 
-          <% for(review of listing.reviews)  { %>
-              <div class="card">
-
-              </div>
-              <% } %>
+<div class="row">
+  <% for (let review of listing.reviews) { %>
+    <div class="col-md-5 col-sm-12 mb-4">
+      <div class="card border-0 shadow-sm rounded-4" style="background-color: #f5f5f5;">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">John the Don</h6>
           
-         </ul>
+          <p class="card-text text-dark mb-1"><%= review.comment %></p>
+          
+          <p class="card-text mb-2" style="color: #226f90c5;">
+            <strong><%= review.rating %></strong> Stars
+          </p>
+          
+          <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+            <button class="btn btn-sm btn-outline-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  <% } %>
+</div>
 
 
         </div>

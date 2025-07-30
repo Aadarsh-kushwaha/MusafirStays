@@ -72,9 +72,10 @@ footer {
 }
 
 /* Card Styling */
-.card {
+.listins-card {
   border: none !important;
   margin-bottom: 2rem;
+  padding-bottom: 3px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border-radius: 1rem !important;
 }
