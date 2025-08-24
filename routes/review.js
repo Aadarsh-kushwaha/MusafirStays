@@ -6,7 +6,7 @@ const { reviewSchema } = require("../schema.js");
 const Review = require("../models/review.js");
 const Listing = require("../models/listing.js");
 
-// ✅ Middleware to validate review data
+// Middleware to validate review data
 const validateReview = (req, res, next) => {
   const { error } = reviewSchema.validate(req.body);
   if (error) {
@@ -16,7 +16,7 @@ const validateReview = (req, res, next) => {
   next();
 };
 
-// ✅ Create a new review for a listing
+// Create a new review for a listing
 router.post(
   "/",
   validateReview,
@@ -33,12 +33,13 @@ router.post(
 
     await newReview.save();
     await listing.save();
+     req.flash("success","New Review added ....!!")
 
     res.redirect(`/listings/${listing._id}`);
   })
 );
 
-// ✅ Delete a review
+//  Delete a review
 router.delete(
   "/:reviewId",
   wrapAsync(async (req, res) => {
@@ -53,6 +54,7 @@ router.delete(
     }
 
     await Review.findByIdAndDelete(reviewId);
+     req.flash("success"," Review Deleted sucessfullyy....!!")
 
     res.redirect(`/listings/${id}`);
   })
