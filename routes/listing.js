@@ -39,17 +39,27 @@ router.post("/", validateListing, wrapAsync(async (req, res) => {
   res.redirect("/listings");
 }));
 
-//SHOW ROUTE
-router.get("/:id",wrapAsync(async (req,res)=>{
+
+// SHOW ROUTE
+router.get("/:id", wrapAsync(async (req,res)=>{
     let {id} = req.params;
-    const listing =  await Listing.findById(id).populate("reviews");
-res.render("listings/show.ejs",{listing});
+    const listing = await Listing.findById(id).populate("reviews");
+    if(!listing){
+        req.flash("error","Listing you requested  is not available ");
+        return res.redirect("/listings");  // ✅ return lagaya
+    }
+    res.render("listings/show.ejs",{listing});
 }));
+
 
 //EDIT ROUTE
 router.get("/:id/edit", wrapAsync(async (req,res)=>{
     let {id} = req.params;
     const listing =  await Listing.findById(id);
+     if(!listing){
+        req.flash("error","Listing you requested  is not available ");
+        return res.redirect("/listings");  // ✅ return lagaya
+    }
     res.render("listings/edit.ejs",{listing});
 }));
 
@@ -57,7 +67,7 @@ router.get("/:id/edit", wrapAsync(async (req,res)=>{
 router.put("/:id",validateListing,wrapAsync(async (req,res)=>{
     let {id} = req.params;
    await Listing.findByIdAndUpdate(id,{...req.body.listing});
-    req.flash("success","Updated  sucessfullyy....!!")
+    req.flash("success","Updated  sucessfullyy....!!");
     res.redirect(`/listings/${id}`);
 }));
 

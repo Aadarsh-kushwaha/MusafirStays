@@ -8,9 +8,16 @@ const ejsMate = require("ejs-mate");
 const port=8080;
 const ExpressError=require("./utils/ExpressError.js");
 const session = require("express-session");
-const  listings = require("./routes/listing.js");
-const reviews = require("./routes/review.js");
+
+const  listingRouter = require("./routes/listing.js");
+const reviewRouter= require("./routes/review.js");
+const userRouter = require("./routes/user.js");
+
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
+
 
 
 // Connect to MongoDB
@@ -45,18 +52,43 @@ const sessionOptions ={
 app.get("/",(req,res)=>{
     res.send("This features are not added yet ....");
 });
+
+
+
 app.use(session(sessionOptions));
 app.use(flash());
 
+
+// AUTHENTICATIONS
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 app.use((req,res,next)=>{
   res.locals.success = req.flash("success");
+  res.locals.error= req.flash("error");
   next();
 })
 
 
+app.get("/demouser",async (req,res)=>{
+  let fakeUser = new User ({
+    email : "aadii@gmail.com",
+    username : "mern-student",
+  });
+  let registerUser = await User.register(fakeUser,"helloworld");
+  res.send(registerUser);
+})
+
 //ROUTING TO THE  ROUTES FOLDER 
-app.use("/listings",listings);
-app.use("/listings/:id/reviews",reviews);
+app.use("/listings",listingRouter);
+app.use("/listings/:id/reviews",reviewRouter);
+app.use("/",userRouter);
 
 
 
