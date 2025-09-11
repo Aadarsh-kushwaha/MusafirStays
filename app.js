@@ -76,14 +76,14 @@ app.use((req,res,next)=>{
 })
 
 
-app.get("/demouser",async (req,res)=>{
-  let fakeUser = new User ({
-    email : "aadii@gmail.com",
-    username : "mern-student",
-  });
-  let registerUser = await User.register(fakeUser,"helloworld");
-  res.send(registerUser);
-})
+// app.get("/demouser",async (req,res)=>{
+//   let fakeUser = new User ({
+//     email : "aadii@gmail.com",
+//     username : "mern-student",
+//   });
+//   let registerUser = await User.register(fakeUser,"helloworld");
+//   res.send(registerUser);
+// })
 
 //ROUTING TO THE  ROUTES FOLDER 
 app.use("/listings",listingRouter);
