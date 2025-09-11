@@ -1,0 +1,131 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row vh-100 d-flex justify-content-center align-items-center">
+  <div class="col-md-6">
+    <div class="card shadow-lg p-5 rounded-4 border-0 glass-card">
+      <!-- Logo + Title -->
+      <div class="d-flex align-items-center justify-content-center mb-4">
+        <i class="fa-solid fa-house-flag text-primary fa-2x me-2"></i>
+        <h2 class="text-travel m-0">Login on MusafirStays</h2>
+      </div>
+
+      <!-- Signup Form -->
+      <form action="/login" method="post" class="needs-validation" novalidate>
+        <div class="row">
+          <!-- Username -->
+          <div class="col-md-12 mb-3">
+            <label class="form-label">Username</label>
+            <input name="username" type="text" class="form-control input-travel" placeholder="Enter username" required>
+          </div>
+
+          <!-- Email -->
+          <!-- <div class="col-md-6 mb-3">
+            <label class="form-label">Email</label>
+            <input name="email" type="email" class="form-control input-travel" placeholder="Enter email" required>
+          </div>
+        </div> -->
+
+        <div class="row">
+          <!-- Password -->
+          <div class="col-md-12 mb-3">
+            <label class="form-label">Password</label>
+            <div class="input-group">
+              <input id="password" name="password" type="password" class="form-control input-travel" placeholder="Enter password" required>
+              <button class="btn btn-outline-travel" type="button" onclick="togglePassword('password')">👁️</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="d-grid mt-3">
+          <button type="submit" class="btn btn-travel text-white fw-bold"> Login</button>
+        </div>
+
+        <!-- Sign up  Link -->
+        <p class="text-center mt-3 mb-0">
+          Don't have an account? 
+          <a href="/signup" class="link-travel">Sign up here</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- CSS -->
+<style>
+  /* Background with travel vibe */
+  body {
+    background: linear-gradient(135deg, #56ccf2, #2f80ed);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Glass effect card */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    border-radius: 18px;
+  }
+
+  /* Heading styles */
+  .text-travel {
+    color: #ff6b35; /* Sunset orange */
+    font-weight: 700;
+    font-size: 1.8rem;
+  }
+  .text-primary {
+    color: #2f80ed !important; /* Sky blue */
+  }
+
+  /* Inputs */
+  .input-travel {
+    border: 2px solid #56ccf2;
+    border-radius: 8px;
+    transition: 0.3s;
+  }
+  .input-travel:focus {
+    border-color: #2f80ed;
+    box-shadow: 0 0 8px rgba(47, 128, 237, 0.4);
+  }
+
+  /* Buttons */
+  .btn-travel {
+    background: linear-gradient(135deg, #ff6b35, #f2994a);
+    border: none;
+    font-size: 1.1rem;
+    padding: 10px;
+    transition: 0.3s;
+    border-radius: 10px;
+  }
+  .btn-travel:hover {
+    opacity: 0.9;
+    transform: scale(1.03);
+  }
+
+  .btn-outline-travel {
+    border-color: #56ccf2;
+    color: #2f80ed;
+    transition: 0.3s;
+  }
+  .btn-outline-travel:hover {
+    background-color: #56ccf2;
+    color: white;
+  }
+
+  /* Links */
+  .link-travel {
+    color: #2f80ed;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .link-travel:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<!-- JS -->
+<script>
+  function togglePassword(id) {
+    const field = document.getElementById(id);
+    field.type = field.type === "password" ? "text" : "password";
+  }
+</script>
