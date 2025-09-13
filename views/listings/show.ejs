@@ -17,9 +17,12 @@
         <br />
 
         <ul class="list-group list-group-flush">
-          <li class="list-group-item"><%= listing.description %></li>
-          <li class="list-group-item">₹<%= listing.price.toLocaleString('en-IN') %></li>
-          <li class="list-group-item"><%= listing.location %>, <%= listing.country %></li>
+         <p> <I>Owned by:<%= listing.owner.username %></I></p>
+        
+           <p class="card-text"> <%= listing.description %> %></p>
+            <p class="card-text">   ₹<%= listing.price.toLocaleString('en-IN') %></p>
+                   <p class="card-text">   <%= listing.location %>, <%= listing.country %> %></p>
+          
         </ul>
         <br />
 
