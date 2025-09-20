@@ -4,12 +4,13 @@
   <div class="container mt-2 mb-5">
     <div class="card shadow-sm rounded-4">
       <div class="card-body">
-        <h2 class="mb-1 text-start">Your Beloved:<%=  listing.title %></h2>
+        <h2 class="mb-1 text-start">Your Beloved: <%= listing.title %></h2>
         <br />
 
         <% if (listing.image) { %>
-          <div class="d-flex justify-content-center mb-1 listings-card" style="height: 300px;width:1700px">
-            <img src="<%= listing.image.url %>" alt="Listing Image" 
+          <div class="d-flex justify-content-center mb-3 listings-card" style="height: 300px; max-width: 100%;">
+            <img src="<%= listing.image.url %>" 
+                 alt="Listing Image" 
                  class="listing-image rounded border" 
                  style="width: 30%; max-width: 400px;">
           </div>
@@ -17,95 +18,83 @@
         <br />
 
         <ul class="list-group list-group-flush">
-         <p> <I>Owned by:<%= listing.owner.username %></I></p>
-        
-           <p class="card-text"> <%= listing.description %> %></p>
-            <p class="card-text">   ₹<%= listing.price.toLocaleString('en-IN') %></p>
-                   <p class="card-text">   <%= listing.location %>, <%= listing.country %> %></p>
-          
+          <p><i>Owned by: <%= listing.owner.username %></i></p>
+          <p class="card-text"><%= listing.description %></p>
+          <p class="card-text">₹<%= listing.price.toLocaleString('en-IN') %></p>
+          <p class="card-text"><%= listing.location %>, <%= listing.country %></p>
         </ul>
         <br />
 
-        <div class="d-flex justify-content-between">
-          <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary px-4 rounded-2">Edit</a>
-          <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
-            <button type="submit" class="btn btn-dark px-4 rounded-3">Delete</button>
-          </form>
-        </div>
+        <% if (currUser && currUser._id.toString() === listing.owner._id.toString()) { %>
+          <div class="d-flex justify-content-between">
+            <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary px-4 rounded-2">Edit</a>
+            <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+              <button type="submit" class="btn btn-dark px-4 rounded-3">Delete</button>
+            </form>
+          </div>
+        <% } %>
+
         <div class="col-8 offset-1 mb-3">
           <hr>
           <h4>Leave a Review</h4>
-          <form action="/listings/<%=listing.id %>/reviews" 
-            method="post"
-            novalidate
-            class="needs-validation"
-            >
-            <!-- <div class="mb-3 mt-3"> -->
-              <!-- <label for="rating" class="form-label">Rating</label> -->
-<!--           
-             <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range" value="3" required>
-             -->
-<div class="mb-3 mt-3"> 
-  <label for="rating" class="form-label">Rating</label>
-<fieldset class="starability-checkmark">
-  <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
-  <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-  <label for="first-rate1" title="Terrible">1 star</label>
-  <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-  <label for="first-rate2" title="Not good">2 stars</label>
-  <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-  <label for="first-rate3" title="Average">3 stars</label>
-  <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-  <label for="first-rate4" title="Very good">4 stars</label>
-  <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-  <label for="first-rate5" title="Amazing">5 stars</label>
-</fieldset>
-</div>
-<div class="invalid-feedback">
-  Please select a rating between 1 and 5.
-</div>
+          <form action="/listings/<%= listing._id %>/reviews" 
+                method="post"
+                novalidate
+                class="needs-validation">
 
-
+            <div class="mb-3 mt-3"> 
+              <label for="rating" class="form-label">Rating</label>
+              <fieldset class="starability-checkmark">
+                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                <label for="first-rate1" title="Terrible">1 star</label>
+                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                <label for="first-rate2" title="Not good">2 stars</label>
+                <input type="radio" id="first-rate3" name="review[rating]" value="3" checked />
+                <label for="first-rate3" title="Average">3 stars</label>
+                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                <label for="first-rate4" title="Very good">4 stars</label>
+                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                <label for="first-rate5" title="Amazing">5 stars</label>
+              </fieldset>
+              <div class="invalid-feedback">
+                Please select a rating between 1 and 5.
+              </div>
             </div>
+
             <div class="mb-3 mt-3">
-              <label for="comments" class="form-label">Comments</label>
+              <label for="comment" class="form-label">Comments</label>
               <textarea name="review[comment]" id="comment" cols="40" rows="5" class="form-control" required></textarea>
-              <div class="invalid-feedback">Please submitt some comments </div>
+              <div class="invalid-feedback">Please submit some comments.</div>
             </div>
-            <br>
-            <button class="btn btn-outline-dark">Submitt</button>
+
+            <button class="btn btn-outline-dark">Submit</button>
           </form>
-      <hr>
-       <p class="fs-5 fw-semibold text-dark mb-3">All Reviews</p>
 
-<div class="row">
-  <% for (let review of listing.reviews) { %>
-    <div class="col-md-5 col-sm-12 mb-4">
-      <div class="card border-0 shadow-sm rounded-4" style="background-color: #f5f5f5;">
-        <div class="card-body">
-          <h6 class="card-subtitle mb-2 text-muted">John the Don</h6>
-          <p class="starability-result card-text" data-rating="<%= review.rating %>">
-            Rated: <%= review.rating %> stars
-          </p>
-          <p class="card-text text-dark mb-1"><%= review.comment %></p>
-          
-          <p class="card-text mb-2" style="color: #226f90c5;">
-            <!-- <strong><%= review.rating %></strong> Stars -->
-          </p>
-          
-          
-          <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
-            <button class="btn btn-sm btn-outline-danger">Delete</button>
-          </form>
+          <hr>
+          <p class="fs-5 fw-semibold text-dark mb-3">All Reviews</p>
+
+          <div class="row">
+            <% for (let review of listing.reviews) { %>
+              <div class="col-md-5 col-sm-12 mb-4">
+                <div class="card border-0 shadow-sm rounded-4" style="background-color: #f5f5f5;">
+                  <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">
+                      <%= review.author ? review.author.username : "Anonymous" %>
+                    </h6>
+                    <p class="starability-result card-text" data-rating="<%= review.rating %>">
+                      Rated: <%= review.rating %> stars
+                    </p>
+                    <p class="card-text text-dark mb-1"><%= review.comment %></p>
+
+                    <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                      <button class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            <% } %>
+          </div>
         </div>
-      </div>
-    </div>
-  <% } %>
-</div>
-
-
-        </div>
-        <br />
       </div>
     </div>
   </div>
