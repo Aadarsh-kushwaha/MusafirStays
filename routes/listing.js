@@ -1,23 +1,11 @@
 const express= require("express");
 const router = express.Router();
 const wrapAsync=require("../utils/wrapAsync.js");
-const {listingSchema , reviewSchema}= require("../schema.js")
+const {listingSchema }= require("../schema.js")
 const ExpressError=require("../utils/ExpressError");
 const Listing = require("../models/listing.js")
-const {isLoggedIn} = require("../middleware.js")
+const {isLoggedIn,isOwner,validateListing} = require("../middleware.js")
 
-
-// Route to server side validation for  the listing form 
-const validateListing= (req,res,next)=>{
-  const {error} = listingSchema.validate(req.body);
-     if (error) {
-    const msg = error.details.map(el => el.message).join(', ');
-    throw new ExpressError(400, msg);
-  } 
-    else{
-        next();
-    } 
-}
 
 
 //SHOW LISTINGS
@@ -60,7 +48,7 @@ router.get("/:id", wrapAsync(async (req,res)=>{
 
 
 //EDIT ROUTE
-router.get("/:id/edit",isLoggedIn, wrapAsync(async (req,res)=>{
+router.get("/:id/edit",isLoggedIn, isOwner,wrapAsync(async (req,res)=>{
     let {id} = req.params;
     const listing =  await Listing.findById(id);
      if(!listing){
@@ -71,15 +59,18 @@ router.get("/:id/edit",isLoggedIn, wrapAsync(async (req,res)=>{
 }));
 
 //UPDATE ROUTE
-router.put("/:id",isLoggedIn,validateListing,wrapAsync(async (req,res)=>{
-    let {id} = req.params;
-   await Listing.findByIdAndUpdate(id,{...req.body.listing});
-    req.flash("success","Updated  sucessfullyy....!!");
+router.put("/:id", isLoggedIn , isOwner, validateListing, wrapAsync(async (req, res) => {
+    const { id } = req.params;
+  
+
+    await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+    req.flash("success", "Updated successfully!");
     res.redirect(`/listings/${id}`);
 }));
 
+
 // DELETE ROUTE
-router.delete("/:id",isLoggedIn,wrapAsync(async (req,res)=>{
+router.delete("/:id",isLoggedIn,isOwner,wrapAsync(async (req,res)=>{
     let {id} = req.params;
   let deleted = await  Listing.findByIdAndDelete(id);
   req.flash("success","Deleted sucessfullyy....!!")
