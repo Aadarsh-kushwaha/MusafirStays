@@ -5,18 +5,9 @@ const ExpressError = require("../utils/ExpressError.js");
 const { reviewSchema } = require("../schema.js");
 const Review = require("../models/review.js");
 const Listing = require("../models/listing.js");
-const {isLoggedIn} = require("../middleware.js");
+const {isLoggedIn, isReviewAuthor} = require("../middleware.js");
 const  {validateReview} = require("../middleware.js");
 
-// Middleware to validate review data
-// const validateReview = (req, res, next) => {
-//   const { error } = reviewSchema.validate(req.body);
-//   if (error) {
-//     const msg = error.details.map((el) => el.message).join(", ");
-//     throw new ExpressError(400, msg);
-//   }
-//   next();
-// };
 
 // Create a new review for a listing
 router.post(
@@ -31,6 +22,8 @@ router.post(
     }
 
     const newReview = new Review(req.body.review);
+    newReview.author = req.user._id;
+  
     listing.reviews.push(newReview);
 
     await newReview.save();
@@ -40,10 +33,11 @@ router.post(
     res.redirect(`/listings/${listing._id}`);
   })
 );
-
-//  Delete a review
+// routes/reviews.js
 router.delete(
   "/:reviewId",
+  isLoggedIn,
+  isReviewAuthor,
   wrapAsync(async (req, res) => {
     const { id, reviewId } = req.params;
 
@@ -56,10 +50,11 @@ router.delete(
     }
 
     await Review.findByIdAndDelete(reviewId);
-     req.flash("success"," Review Deleted sucessfullyy....!!")
 
+    req.flash("success", "Review Deleted Successfully!");
     res.redirect(`/listings/${id}`);
   })
 );
+
 
 module.exports = router;

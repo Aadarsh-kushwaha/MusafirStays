@@ -1,6 +1,8 @@
 const Listing = require("./models/listing");
+const Review = require("./models/review");
 const ExpressError=require("./utils/ExpressError.js");
 const {listingSchema , reviewSchema}= require("./schema.js");
+
 
 
 module.exports.isLoggedIn = (req,res,next) =>{
@@ -27,6 +29,17 @@ module.exports.isOwner =async (req,res,next)=>{
 
     if (!res.locals.currUser || !listing.owner._id.equals(res.locals.currUser._id)) {
         req.flash("error", "Only the owner have the access to update");
+        return res.redirect(`/listings/${id}`);
+    }
+    next();
+};
+
+module.exports.isReviewAuthor =async (req,res,next)=>{
+     const { id,reviewId } = req.params;
+    const review = await Review.findById(reviewId);
+
+    if (!res.locals.currUser || !review.author.equals(res.locals.currUser._id)) {
+        req.flash("error", "Only the creator have the access to update");
         return res.redirect(`/listings/${id}`);
     }
     next();

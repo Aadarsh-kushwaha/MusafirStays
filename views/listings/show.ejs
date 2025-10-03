@@ -25,23 +25,20 @@
         </ul>
         <br />
 
-        <!-- <% if (currUser && currUser._id.toString() === listing.owner._id.toString()) { %> -->
-          <!-- <div class="d-flex justify-content-between">
+         <% if (currUser && currUser._id.toString() === listing.owner._id.toString()) {%> 
+          <div class="d-flex justify-content-between">
             <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary px-4 rounded-2">Edit</a>
             <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
               <button type="submit" class="btn btn-dark px-4 rounded-3">Delete</button>
             </form>
-          </div> -->
-        <!-- <% } %> -->
-
-        <div class="d-flex justify-content-between">
-  <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary px-4 rounded-2">Edit</a>
-  <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
-    <button type="submit" class="btn btn-dark px-4 rounded-3">Delete</button>
-  </form>
-</div>
+          </div> 
+       
+    
+  <% } %> 
 
 
+
+<% if(currUser){ %>
         <div class="col-8 offset-1 mb-3">
           <hr>
           <h4>Leave a Review</h4>
@@ -77,6 +74,7 @@
 
             <button class="btn btn-outline-dark">Submit</button>
           </form>
+          <% } %>
 
           <hr>
           <p class="fs-5 fw-semibold text-dark mb-3">All Reviews</p>
@@ -92,6 +90,7 @@
                     <p class="starability-result card-text" data-rating="<%= review.rating %>">
                       Rated: <%= review.rating %> stars
                     </p>
+                     
                     <p class="card-text text-dark mb-1"><%= review.comment %></p>
 
                     <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
