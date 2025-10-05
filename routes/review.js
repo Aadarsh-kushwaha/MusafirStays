@@ -10,7 +10,7 @@ const  {validateReview} = require("../middleware.js");
 
 
 const reviewController = require("../controllers/reviews.js");
-// const { postReview } = require("../controllers/reviews.js");
+
 
 
 // Create a new review for a listing

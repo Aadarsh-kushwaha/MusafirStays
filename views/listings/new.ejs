@@ -6,7 +6,7 @@
       <div class="card-body">
         <h2 class="mb-4 text-center text-primary fw-bold">🚀 Create a New Guesthouse Listing</h2>
 
-        <form method="POST" action="/listings" novalidate class="needs-validation">
+        <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
 
           <div class="mb-3">
             <label class="form-label">Title</label>
@@ -21,10 +21,14 @@
              <div class="valid-feedback">Description is complete</div>
             <div class="invalid-feedback">Give the description for more info </div>
           </div>
-
+<!-- 
           <div class="mb-3">
             <label class="form-label">Image URL</label>
-            <input name="listing[image][url]" type="text" class="form-control rounded-3" placeholder="https://yourimage.jpg" >
+            <input name="listing[image][url]" type="text" class="form-control rounded-3"   placeholder="https://yourimage.jpg">
+          </div> -->
+           <div class="mb-3">
+            <label class="form-label">Upload listing Image</label>
+            <input name="listing[image][url]" type="file" class="form-control rounded-3" >
           </div>
 
           <div class="row">
