@@ -19,6 +19,7 @@ router.route("/")
     res.send(req.file);
 });
 
+
 // //NEW ROUTE
 router.get("/new",isLoggedIn,listingsController.renderNewForm);
 
