@@ -36,6 +36,20 @@ main()
   .catch((err) => {
     console.log("there is some error", err); 
   });
+  
+
+// Connect to MongoDB
+async function main() {
+    await mongoose.connect(MONGO_URL);
+}
+main()
+  .then(() => {
+    console.log("connected to DB");
+  })
+  .catch((err) => {
+    console.log("there is some error", err); 
+  });
+  
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
