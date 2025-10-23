@@ -74,10 +74,9 @@ const sessionOptions ={
   },
 
 };
-app.get("/",(req,res)=>{
-    res.send("This features are not added yet ....");
+app.get("/", (req, res) => {
+  res.redirect("/listings");
 });
-
 
 
 app.use(session(sessionOptions));
@@ -111,6 +110,7 @@ app.use((req,res,next)=>{
 //   let registerUser = await User.register(fakeUser,"helloworld");
 //   res.send(registerUser);
 // })
+
 
 //ROUTING TO THE  ROUTES FOLDER 
 app.use("/listings",listingRouter);
