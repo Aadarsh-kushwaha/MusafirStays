@@ -1,143 +1,231 @@
 <% layout("/layouts/boilerplate") %>
-<!-- <%= success %> -->
-<style> 
 
+<style>
+/* 🌈 Overall Page Setup */
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #f3f4f6, #e0e7ff);
+  font-family: "Poppins", sans-serif;
+  color: #333;
+}
+
+/* 🌄 Listings Section Background */
+.listings-section {
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.85),
+      rgba(255, 255, 255, 0.92)
+    ),
+    url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  border-radius: 25px;
+  padding: 3rem 2rem;
+  width: 95%;
+  margin: 2rem auto;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
+}
+
+/* 🌐 Filters Row */
 #filters {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  justify-content: flex-start;
+  gap: 2rem;
   overflow-x: auto;
-  padding: 1rem 0.5rem;
-  scrollbar-width: none; /* Firefox */
+  padding: 1rem 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  scrollbar-width: none;
 }
-#filters::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+#filters::-webkit-scrollbar {
+  display: none;
+}
 
 .filter {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 80px;
+  min-width: 90px;
   cursor: pointer;
-  color: #717171;
+  color: #666;
   transition: all 0.25s ease;
   border-bottom: 2px solid transparent;
 }
 .filter i {
-  font-size: 1.3rem;
-  margin-bottom: 6px;
-  color: #717171;
+  font-size: 1.4rem;
+  margin-bottom: 5px;
+  color: #666;
 }
 .filter span {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 500;
   white-space: nowrap;
 }
 .filter:hover,
 .filter.active {
-  color: #000;
-  border-bottom: 2px solid #000;
+  color: #111;
+  border-bottom: 2px solid #111;
 }
 .filter:hover i,
 .filter.active i {
-  color: #000;
+  color: #111;
 }
 
-
-
+/* 🏠 Cards Grid */
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.card {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.6s ease;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #ffffffc9;
+  backdrop-filter: blur(6px);
+}
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.card img {
+  height: 230px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  border-radius: 18px 18px 0 0;
+}
+.card:hover img {
+  transform: scale(1.07);
+}
+.card:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  transform: translateY(-6px);
+}
+.card-body {
+  padding: 1.1rem 1.2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 0 0 18px 18px;
+}
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+.card-text {
+  font-size: 0.9rem;
+  color: #444;
+}
 </style>
 
+<body>
+  <div class="container-fluid px-0">
+    <h2
+      class="mb-4 text-left fw-semibold text-dark px-5"
+      style="font-size: 1.7rem"
+    >
+      Explore All Guesthouses 🏡
+    </h2>
 
-<body class="bg-light py-4 px-3">
-  <div class="container">
-    <h2 class="mb-4 text-left text-primary fw-semibold">All Listed Guesthouses</h2>
-   <div id="filters">
-  <div class="filter"><i class="fa-solid fa-fire"></i><span>Trending</span></div>
-  <div class="filter"><i class="fa-solid fa-bed"></i><span>Rooms</span></div>
-  <div class="filter"><i class="fa-solid fa-star"></i><span>Top Rated</span></div>
-  <div class="filter"><i class="fa-solid fa-tag"></i><span>Offers</span></div>
-  <div class="filter"><i class="fa-solid fa-mountain-sun"></i><span>Mountains</span></div>
-  <div class="filter"><i class="fa-solid fa-umbrella-beach"></i><span>Beach</span></div>
-  <div class="filter"><i class="fa-solid fa-city"></i><span>City Life</span></div>
-  <div class="filter"><i class="fa-solid fa-leaf"></i><span>Nature</span></div>
-  <div class="filter"><i class="fa-solid fa-campground"></i><span>Camping</span></div>
-  <div class="filter"><i class="fa-solid fa-person-shelter"></i><span>Cabins</span></div>
-  <div class="filter"><i class="fa-solid fa-mountain-city"></i><span>Mountains</span></div>
-</div>
+    <!-- 🌐 Filters -->
+    <div id="filters" class="px-4">
+      <div class="filter active" data-filter="trending">
+        <i class="fa-solid fa-fire"></i><span>Trending</span>
+      </div>
+      <div class="filter" data-filter="rooms">
+        <i class="fa-solid fa-bed"></i><span>Rooms</span>
+      </div>
+      <div class="filter" data-filter="toprated">
+        <i class="fa-solid fa-star"></i><span>Top Rated</span>
+      </div>
+      <div class="filter" data-filter="offers">
+        <i class="fa-solid fa-tag"></i><span>Offers</span>
+      </div>
+      <div class="filter" data-filter="mountains">
+        <i class="fa-solid fa-mountain-sun"></i><span>Mountains</span>
+      </div>
+      <div class="filter" data-filter="beach">
+        <i class="fa-solid fa-umbrella-beach"></i><span>Beach</span>
+      </div>
+      <div class="filter" data-filter="city">
+        <i class="fa-solid fa-city"></i><span>City Life</span>
+      </div>
+      <div class="filter" data-filter="nature">
+        <i class="fa-solid fa-leaf"></i><span>Nature</span>
+      </div>
+      <div class="filter" data-filter="camping">
+        <i class="fa-solid fa-campground"></i><span>Camping</span>
+      </div>
+      <div class="filter" data-filter="cabins">
+        <i class="fa-solid fa-person-shelter"></i><span>Cabins</span>
+      </div>
+    </div>
 
-
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mt-3">
-      <% for (let listing of allListing) { %>
+    <!-- 🌄 Listings Section -->
+    <div class="listings-section">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 mt-3 px-2">
+        <% for (let listing of allListing) { %>
         <div class="col">
-          <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
-            <div class="card h-100 shadow-sm border-0 rounded-4 transition listing-card">
+          <a
+            href="/listings/<%= listing._id %>"
+            class="text-decoration-none text-dark"
+          >
+            <div
+              class="card h-100 shadow-sm border-0 rounded-4 transition listing-card"
+            >
               <img
                 src="<%= listing.image?.url || 'https://via.placeholder.com/400x300?text=No+Image' %>"
-                class="card-img-top rounded-top-4"
                 alt="listing image"
-                style="height: 220px; object-fit: cover;"
+                class="card-img-top"
               />
               <div class="card-body">
                 <h5 class="card-title mb-2 fw-bold"><%= listing.title %></h5>
-
-               <p class="card-text text-muted mb-1">
-  <% if (listing.price != null) { %>
-    ₹<%= listing.price.toLocaleString("en-IN") %> <small>/ night</small>
-  <% } else { %>
-    <span class="text-muted">Price not available</span>
-  <% } %>
-</p>
-
-
+                <p class="card-text text-muted mb-1">
+                  <% if (listing.price != null) { %> ₹<%=
+                  listing.price.toLocaleString("en-IN") %>
+                  <small>/ night</small>
+                  <% } else { %>
+                  <span class="text-muted">Price not available</span>
+                  <% } %>
+                </p>
               </div>
             </div>
           </a>
         </div>
-      <% } %>
+        <% } %>
+      </div>
     </div>
   </div>
 
-  <!-- ✅ Scroll Animation Script -->
+  <!-- 🧠 Scroll Animation + Filter -->
   <script>
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-        } else {
-          entry.target.classList.remove("show");
-        }
-      });
-    }, {
-      threshold: 0.1,
-    });
+    // Intersection Observer for smooth load
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("show");
+        });
+      },
+      { threshold: 0.1 }
+    );
 
     const cards = document.querySelectorAll(".card");
-    cards.forEach((card, index) => {
-      card.style.transitionDelay = `${index * 0.05}s`;
+    cards.forEach((card, i) => {
+      card.style.transitionDelay = `${i * 0.04}s`;
       observer.observe(card);
     });
+
+    // Active Filter Toggle
+    const filters = document.querySelectorAll(".filter");
+    filters.forEach((f) =>
+      f.addEventListener("click", () => {
+        filters.forEach((fl) => fl.classList.remove("active"));
+        f.classList.add("active");
+      })
+    );
   </script>
-
-  <!-- ✅ CSS for scroll effect -->
-  <style>
-    .card {
-      opacity: 0;
-      transform: scale(0.95);
-      transition: all 0.6s ease;
-    }
-
-    .card.show {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .hover-shadow:hover {
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-      transform: translateY(-2px);
-    }
-
-    .transition {
-      transition: 0.3s ease-in-out;
-    }
-  </style>
 </body>
