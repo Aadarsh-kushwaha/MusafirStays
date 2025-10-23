@@ -1,11 +1,72 @@
 <% layout("/layouts/boilerplate") %>
 <!-- <%= success %> -->
+<style> 
+
+#filters {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding: 1rem 0.5rem;
+  scrollbar-width: none; /* Firefox */
+}
+#filters::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+  cursor: pointer;
+  color: #717171;
+  transition: all 0.25s ease;
+  border-bottom: 2px solid transparent;
+}
+.filter i {
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+  color: #717171;
+}
+.filter span {
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.filter:hover,
+.filter.active {
+  color: #000;
+  border-bottom: 2px solid #000;
+}
+.filter:hover i,
+.filter.active i {
+  color: #000;
+}
+
+
+
+</style>
+
 
 <body class="bg-light py-4 px-3">
   <div class="container">
     <h2 class="mb-4 text-left text-primary fw-semibold">All Listed Guesthouses</h2>
+   <div id="filters">
+  <div class="filter"><i class="fa-solid fa-fire"></i><span>Trending</span></div>
+  <div class="filter"><i class="fa-solid fa-bed"></i><span>Rooms</span></div>
+  <div class="filter"><i class="fa-solid fa-star"></i><span>Top Rated</span></div>
+  <div class="filter"><i class="fa-solid fa-tag"></i><span>Offers</span></div>
+  <div class="filter"><i class="fa-solid fa-mountain-sun"></i><span>Mountains</span></div>
+  <div class="filter"><i class="fa-solid fa-umbrella-beach"></i><span>Beach</span></div>
+  <div class="filter"><i class="fa-solid fa-city"></i><span>City Life</span></div>
+  <div class="filter"><i class="fa-solid fa-leaf"></i><span>Nature</span></div>
+  <div class="filter"><i class="fa-solid fa-campground"></i><span>Camping</span></div>
+  <div class="filter"><i class="fa-solid fa-person-shelter"></i><span>Cabins</span></div>
+  <div class="filter"><i class="fa-solid fa-mountain-city"></i><span>Mountains</span></div>
+</div>
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mt-3">
       <% for (let listing of allListing) { %>
         <div class="col">
           <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review.js");
+const { required } = require("joi");
 
 const listingSchema = new Schema({
     title: {
@@ -9,16 +10,8 @@ const listingSchema = new Schema({
     },
     description : String,
     image: {
-        filename: String,
-        url: {
-          type: String,
-          default:
-            "https://resources.thomascook.in/images/holidays/staticPage/ThingsToDo/kerala20.jpg",
-          set: (v) =>
-            v == " "
-              ? "https://resources.thomascook.in/images/holidays/staticPage/ThingsToDo/kerala20.jpg"
-              : v,
-        },
+      url: String,
+      filename : String,
       },
     price: {
   type: Number,

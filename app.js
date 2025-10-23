@@ -25,18 +25,6 @@ const User = require("./models/user.js");
 
 
 
-// Connect to MongoDB
-async function main() {
-    await mongoose.connect(MONGO_URL);
-}
-main()
-  .then(() => {
-    console.log("connected to DB");
-  })
-  .catch((err) => {
-    console.log("there is some error", err); 
-  });
-  
 
 // Connect to MongoDB
 async function main() {
