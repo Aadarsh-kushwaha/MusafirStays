@@ -32,15 +32,19 @@ const User = require("./models/user.js");
 
 // Connect to MongoDB
 async function main() {
-    await mongoose.connect(dburl);
+  await mongoose.connect(process.env.ATLASDB_URL, {
+    tlsInsecure: true
+  });
 }
+
 main()
   .then(() => {
     console.log("connected to DB");
   })
   .catch((err) => {
-    console.log("there is some error", err); 
+    console.log("there is some error", err);
   });
+
   
 
 app.set("view engine","ejs");
