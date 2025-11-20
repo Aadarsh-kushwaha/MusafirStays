@@ -8,7 +8,7 @@ const express= require("express");
 const app= express();
 const mongoose= require("mongoose");
 const path = require("path");
-const MONGO_URL = "mongodb://127.0.0.1:27017/MusafirStay";
+// const MONGO_URL = "mongodb://127.0.0.1:27017/MusafirStay";
 
 const dburl = process.env.ATLASDB_URL;
 const methodOverride = require("method-override");
@@ -32,7 +32,7 @@ const User = require("./models/user.js");
 
 // Connect to MongoDB
 async function main() {
-  await mongoose.connect(MONGO_URL, {
+  await mongoose.connect(dburl, {
     tlsInsecure: true
   });
 }
