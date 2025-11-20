@@ -8,7 +8,7 @@ const express= require("express");
 const app= express();
 const mongoose= require("mongoose");
 const path = require("path");
-//const MONGO_URL = "mongodb://127.0.0.1:27017/MusafirStay";
+const MONGO_URL = "mongodb://127.0.0.1:27017/MusafirStay";
 
 const dburl = process.env.ATLASDB_URL;
 const methodOverride = require("method-override");
@@ -32,7 +32,7 @@ const User = require("./models/user.js");
 
 // Connect to MongoDB
 async function main() {
-  await mongoose.connect(process.env.ATLASDB_URL, {
+  await mongoose.connect(MONGO_URL, {
     tlsInsecure: true
   });
 }
@@ -98,12 +98,19 @@ passport.deserializeUser(User.deserializeUser());
 
 
 app.use((req,res,next)=>{
-  res.locals.success = req.flash("success");
-  res.locals.error= req.flash("error");
-  res.locals.currUser = req.user ; 
-    
+
+res.locals.success = req.flash("success");
+res.locals.error= req.flash("error");
+res.locals.currUser = req.user ;
+next();
+});
+
+
+
+app.use((req, res, next) => {
+  res.locals.currUser = req.user || null;
   next();
-})
+});
 
 
 // app.get("/demouser",async (req,res)=>{
